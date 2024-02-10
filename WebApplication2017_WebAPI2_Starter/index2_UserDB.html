@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Client端呼叫 WebAPI（連結 MVC_UserDB資料庫）</title>
+
+    <!-- Client端的程式  如下 -->
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script>
+
+        var uri = 'api/WebAPI';
+        //*******************
+
+        $(document).ready(function () {
+            // Send an AJAX request
+            $.getJSON(uri)     
+                .done(function (data) {
+                    // On success, 'data' contains a list of products.
+                    $.each(data, function (key, item) {
+                        // Add a list item for the product.
+                        $('<li>', { text: formatItem(item) }).appendTo($('#display_one'));
+                    });
+                });
+        });
+
+        //==========================================
+        function find() {
+            var id = $('#prodId').val();   
+            $.getJSON(uri + '/' + id)      // 記得修改路由 Routing
+                .done(function (data) {
+                    $('#display_two').text(formatItem(data));
+                })
+                .fail(function (jqXHR, textStatus, err) {
+                    $('#display_two').text('錯誤訊息：' + err);
+                });
+        }
+
+
+        // 上面兩個程式共用的 function
+        function formatItem(item) {
+            return item.UserId + ': $' + item.UserName;
+                    //*******************************（大小寫不能弄錯，很嚴格！）
+        }
+    </script>
+</head>
+<body>
+    <font color="blue">
+        <h3>Client端呼叫 WebAPI#2（連結 MVC_UserDB資料庫）</h3>
+    </font>
+    ****************************************************<br />
+        
+    <div>
+        <h3>列出所有User：</h3>
+        <hr />（第一次執行，請稍等幾秒）<br />
+
+        <ul id="display_one" />    <!-- ********************* -->
+    </div>
+
+    <div>
+        <hr />
+        <h3>請輸入 UserID：</h3>
+        <input type="text" id="prodId" size="5" />（數字 1~18）  <br /><br />
+        <input type="button" value="Search（展示單一筆User）" onclick="find();" />
+
+        <br /><br />
+        <p id="display_two" />    <!-- ********************* -->
+
+    </div>
+
+</body>
+</html>

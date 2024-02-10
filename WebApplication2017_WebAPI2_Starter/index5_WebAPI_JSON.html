@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Product App（Client端的首頁）</title>
+
+    <!-- Client端的程式  如下 -->
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript">
+$(function () {
+            $("#btnGet").click(function () {
+
+                var id = $('#prodId').val();
+                var person = '{id: "' + $("#prodId").val() + '" }';  // 傳送給 Server的格式
+
+                $.ajax({
+                    type: "GET",
+                    url: "api/WebAPI/" + id,
+                    data: person,  // 傳送給 Server的格式
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        alert("Hello：" + response.UserId + ".\n傳回的結果：" + response.UserName);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            });
+});
+    </script>
+
+</head>
+<body>
+    <h3>Client端呼叫 WebAPI #5 -- </h3>
+    ****************************************************<br />
+    資料來源 https://www.aspsnippets.com/Articles/jQuery-AJAX-Post-JSON-data-to-Web-API-in-ASPNet-MVC.aspx
+    <br />
+
+    <div>
+        <h3>請使用瀏覽器的 F12來觀察結果</h3>
+        ID編號：<input type="text" id="prodId" value="2" />  <br />
+
+        <input type="button" id="btnGet" value="請按我！" />
+    </div>
+
+</body>
+</html >
