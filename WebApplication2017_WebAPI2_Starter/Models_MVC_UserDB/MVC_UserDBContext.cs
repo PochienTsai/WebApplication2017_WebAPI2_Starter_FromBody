@@ -21,5 +21,7 @@ namespace WebApplication2017_WebAPI2_Starter.Models_MVC_UserDB
                 .Property(e => e.UserSex)
                 .IsFixedLength();
         }
+
+        public System.Data.Entity.DbSet<WebApplication2017_WebAPI2_Starter.Models.Product> Products { get; set; }
     }
 }

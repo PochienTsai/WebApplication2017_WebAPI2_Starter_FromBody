@@ -15,6 +15,7 @@ namespace WebApplication2017_WebAPI2_Starter.Controllers
     /// </summary>
     public class ProductsController : ApiController
     {
+        //此為微軟提供的範例
         #region  // 加入預設值（基本資料）
         // 程式沒有防呆，ID數字請勿重複！
         Product[] products = new Product[]
@@ -51,29 +52,30 @@ namespace WebApplication2017_WebAPI2_Starter.Controllers
 
         // 需要一個輸入值。只列出「單一筆」資料。
         // 傳回值 -- (3)  IHttpActionResult
-        //public IHttpActionResult GetProduct(int id)
-        //{   // 原廠範例  // 傳回值 -- (3)  IHttpActionResult
-        //    var product = products.FirstOrDefault((p) => p.Id == id);
-        //    if (product == null)   {
-        //        return NotFound();  // 找不到。這也是 Http.Results的一種，需搭配 IHttpActionResult使用
-        //    }
-        //    return Ok(product);
-        //    // returns an HttpStatusCode.OK   // https://docs.microsoft.com/zh-tw/previous-versions/aspnet/dn308866%28v%3dvs.118%29
-        //}
-
-        public Product GetProduct(int id)
-        {
-            var pd = products.FirstOrDefault((p) => p.Id == id);
-            if (pd == null)   {
-                Product pdx = new Product()
-                {
-                    Name = "找不到",
-                    Price = 0
-                };
-            return pdx;
+        public IHttpActionResult GetProduct(int id)
+        {   // 原廠範例  // 傳回值 -- (3)  IHttpActionResult
+            var product = products.FirstOrDefault((p) => p.Id == id);
+            if (product == null)
+            {
+                return NotFound();  // 找不到。這也是 Http.Results的一種，需搭配 IHttpActionResult使用
             }
-            return pd;
+            return Ok(product);
+            // returns an HttpStatusCode.OK   // https://docs.microsoft.com/zh-tw/previous-versions/aspnet/dn308866%28v%3dvs.118%29
         }
+
+        //public Product GetProduct(int id)
+        //{
+        //    var pd = products.FirstOrDefault((p) => p.Id == id);
+        //    if (pd == null)   {
+        //        Product pdx = new Product()
+        //        {
+        //            Name = "找不到",
+        //            Price = 0
+        //        };
+        //    return pdx;
+        //    }
+        //    return pd;
+        //}
 
         //===========================================================
         // https://docs.microsoft.com/zh-tw/aspnet/web-api/overview/getting-started-with-aspnet-web-api/action-results
